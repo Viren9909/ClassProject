@@ -1,0 +1,196 @@
+.main-nav{
+    position: fixed;
+    top: 0px;
+    z-index: 50;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-bottom-width: 1px;
+    border-color: rgb(229, 231, 235);
+}
+/* dark mode */
+.dark .main-nav{
+    background-color: rgb(31, 41, 55);
+    border-color: rgb(55, 65, 81);
+}
+
+.parent-div{
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+ 
+@media (min-width: 1024px) {
+    .parent-div {
+        padding-left: 2rem;
+        padding-right: 1.25rem;
+    }
+}
+
+.parent-div-1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.rtl .logo-container{
+    justify-content: flex-end;
+}
+
+.sidebar-btn{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgb(107, 114, 128);
+    border-radius: 0.5rem;
+}
+
+@media (min-width:640px){
+    .sidebar-btn{
+        display: none;
+    }
+}
+
+.sidebar-btn:hover{
+    background-color: rgb(243, 244, 246);
+}
+
+.sidebar-btn:focus{
+    outline:  2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: var(--tw-ring-inset)
+    0 0 0 calc(2px + var(--tw-ring-offset-width))
+    var(--tw-ring-color);
+    --tw-ring-color: rgb(229, 231, 235)
+}
+
+.dark .sidebar-btn{
+    color: rgb(156, 163, 175);
+}
+
+.dark .sidebar-btn:hover{
+    background-color: rgb(55, 65, 81);
+}
+
+.dark .sidebar-btn:focus{
+    --tw-ring-color: rgb(75,85,99);
+}
+
+.user-menu-btn{
+    @apply flex text-sm bg-gray-800 rounded-full;
+}
+
+.user-menu-btn:focus{
+    @apply ring-4 ring-gray-300
+}
+
+.dark .user-menu-btn:focus{
+    @apply ring-gray-600
+}
+
+.list-div{
+    @apply z-50 my-4 text-base 
+    list-none bg-white
+    divide-gray-100 rounded shadow;
+}
+
+.dark .list-div{
+    @apply bg-gray-700 divide-gray-600
+}
+
+.user-mail{
+    @apply text-sm font-medium text-gray-900 truncate
+}
+
+.dark .user-mail{
+    @apply text-gray-300
+}
+
+.user-menu-link{
+    @apply block px-4 py-2 text-sm text-gray-700
+}
+
+.user-menu-link:hover{
+    @apply bg-gray-100
+}
+
+.dark .user-menu-link{
+    @apply text-gray-300
+}
+
+.dark .user-menu-link:hover{
+    @apply bg-gray-600 text-white
+}
+
+.sidebar{
+    @apply fixed top-0 left-0 z-40
+    w-64 h-screen pt-20 transition-transform
+    bg-white border-r border-gray-200;
+}
+
+@media (min-width:640px){
+    .sidebar{
+        @apply translate-x-0
+    }
+}
+
+.dark .sidebar{
+    @apply bg-gray-800 border-gray-700
+}
+
+.sidebar-link{
+    @apply flex items-center p-2
+    text-gray-900 rounded-lg
+}
+
+.sidebar-link:hover{
+    @apply bg-gray-100
+}
+
+.dark .sidebar-link{
+    @apply text-white
+}
+
+.dark .sidebar-link:hover{
+    @apply bg-gray-700
+}
+
+.sidebar-svg{
+    @apply flex-shrink-0 w-5 h-5
+    text-gray-500 transition duration-75
+}
+
+.group-hover .sidebar-svg{
+    @apply text-gray-900
+}
+
+.dark .sidebar-svg{
+    @apply text-gray-400
+}
+
+.dark .group-hover .sidebar-svg{
+    @apply text-white
+}
+
+.inbox-badge{
+    @apply inline-flex items-center
+    justify-center w-3 h-3 p-3 ms-3
+    text-sm font-medium
+    text-blue-800 bg-blue-100 rounded-full
+}
+
+.dark .inbox-badge{
+    @apply bg-blue-900 text-blue-300
+}
+
+.sidebar-span{
+    @apply flex-1 ms-3 whitespace-nowrap
+}

@@ -1,0 +1,11 @@
+.row-item{
+    @apply grid grid-cols-6 bg-gray-100 h-14
+}
+
+.dark .row-item{
+    @apply bg-gray-800
+}
+
+.center-item{
+    @apply mx-auto my-auto
+}
