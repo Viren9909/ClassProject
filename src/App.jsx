@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
+import { DarkModeProvider } from './contexts/DarkModeContext';
 import Login from './screens/Login'
 import Register from './screens/Register'
 import Home from './screens/Home';
@@ -8,7 +9,7 @@ import Product from './screens/Product';
 import About from './screens/About';
 import Contact from './screens/Contact';
 import Profile from './screens/Profile';
-import { DarkModeProvider } from './contexts/DarkModeContext';
+import ProductForm from './components/ProductForm';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route exact path='/about' element={<About />} />
             <Route exact path='/contact' element={<Contact />} />
             <Route exact path='/profile' element={<Profile />} />
+            <Route exact path='/producform' element={<ProductForm />} />
           </Routes>
         </BrowserRouter>
       </DarkModeProvider>

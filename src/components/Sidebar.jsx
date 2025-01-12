@@ -8,6 +8,8 @@ import { DarkModeContext } from '../contexts/DarkModeContext';
 const Sidebar = () => {
 
     const { toggleDarkMode } = useContext(DarkModeContext);
+    const userString = localStorage.getItem("user");
+    const user = JSON.parse(userString)
 
     return (
         <div className=''>
@@ -29,18 +31,18 @@ const Sidebar = () => {
                         <div className="flex items-center">
                             <div className="flex items-center ms-3">
                                 <div>
-                                    <button type="button" className="user-menu-btn" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                    {user && <button type="button" className="user-menu-btn" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
-                                    </button>
+                                        <img className="w-8 h-8 rounded-full" src={user ? user.profileImage : null} alt="user photo" />
+                                    </button>}
                                 </div>
                                 <div className="list-div divide-y hidden" id="dropdown-user">
                                     <div className="px-4 py-3" role="none">
                                         <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                            Neil Sims
+                                            {user ? user.username : null}
                                         </p>
                                         <p className="user-mail" role="none">
-                                            neil.sims@flowbite.com
+                                            {user ? user.email : null}
                                         </p>
                                     </div>
                                     <ul className="py-1" role="none">

@@ -1,23 +1,23 @@
 import React, { useState, useRef } from 'react'
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "../style/Register.css"
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Register = () => {
 
     const [formData, setFormData] = useState({
-        fullname: '',
+        fullName: '',
         username: '',
         email: '',
         phone: '',
         password: '',
-        confirmPassword: '',
-        role: "",
+        role: '',
         address: '',
+        profileImage: ''
     });
-
-    const [preview, setPreview] = useState('default_profile.png');
+    const navigate = useNavigate()
+    const [preview, setPreview] = useState(null)
     const handleImageChange = (event) => {
         const file = event.target.files[0];
 
@@ -25,6 +25,7 @@ const Register = () => {
             const reader = new FileReader();
 
             reader.onload = () => {
+                console.log(reader.result)
                 setPreview(reader.result);
             };
 
@@ -35,14 +36,45 @@ const Register = () => {
     const fileInputRef = useRef(null);
 
     const handleChange = (event) => {
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-
+        if (event.target.name === "profileImage") {
+            handleImageChange(event)
+            setFormData({ ...formData, profileImage: event.target.files[0] })
+        }
+        else {
+            setFormData({ ...formData, [event.target.name]: event.target.value });
+        }
     };
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData)
+        // console.log(formData)
+        const form = new FormData();
+        form.append('fullName', formData.fullName);
+        form.append('username', formData.username);
+        form.append('email', formData.email);
+        form.append('phone', formData.phone);
+        form.append('password', formData.password);
+        form.append('role', formData.role);
+        form.append('address', formData.address);
+        if (formData.profileImage) {
+            form.append('profileImage', formData.profileImage);
+        }
+        try {
+            const response = await axios.post("http://localhost:8000/api/v1/users/register", form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            )
+            if (response.status === 200){
+                localStorage.setItem("user",JSON.stringify(response.data)) // need to be change
+                navigate("/")
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     const handleImageClick = () => {
@@ -59,21 +91,21 @@ const Register = () => {
                                 Create an account
                             </h1>
                             {/* form */}
-                            <form className="space-y-2" action="submit">
+                            <form className="space-y-2" action="submit" encType='multipart/form-data'>
 
                                 <div className="flex flex-col items-center">
                                     <div
                                         className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-300 cursor-pointer" onClick={handleImageClick} >
                                         <img src={preview} alt="Profile" className="w-full h-full object-cover" />
                                     </div>
-                                    <input type="file" id="file-upload" onChange={handleImageChange} name='img' accept="image/*" ref={fileInputRef} className="hidden" />
+                                    <input type="file" id="file-upload" onChange={handleChange} name='profileImage' accept="image/*" ref={fileInputRef} className="hidden" />
                                 </div>
 
 
                                 <div className='flex justify-between'>
                                     <div className='w-1/2 mr-2 relative'>
-                                        <label htmlFor="fullname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
-                                        <input type="text" onChange={handleChange} name="fullname" id="fullname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. firstName lastName" required="" />
+                                        <label htmlFor="fullName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
+                                        <input type="text" onChange={handleChange} name="fullName" id="fullName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. firstName lastName" required="" />
                                     </div>
                                     <div className='w-1/2 ml-2'>
                                         <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Name</label>
@@ -85,7 +117,7 @@ const Register = () => {
                                 <div className='flex'>
                                     <div className='w-1/2 mr-2'>
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
-                                        <input type="text" onChange={handleChange} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. user1234" required="" />
+                                        <input type="text" onChange={handleChange} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. domain@gmail.com" required="" />
                                     </div>
                                     <div className='w-1/2 ml-2'>
                                         <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Phone</label>
